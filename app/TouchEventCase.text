@@ -1,0 +1,51 @@
+dispatchTouchEvent(MotionEvent ev)
+   return true，事件会分发给当前 View 并由 dispatchTouchEvent 方法进行消费
+   return false，将事件返回给父 View 的  onTouchEvent （如果获取的事件直接来自 Activity，返回给activity的onTouchEvent） 进行消费
+   super.dispatchTouchEvent(ev)，事件会自动的分发给当前 View 的 onInterceptTouchEvent 方法
+
+case 1：
+  Activity
+    dispatchTouchEvent      true || false
+   Logcat:
+     E/TouchEvent: MainActivity | dispatchTouchEvent --> ACTION_DOWN
+     E/TouchEvent: MainActivity | dispatchTouchEvent --> ACTION_UP
+
+    dispatchTouchEvent      super.dispatchTouchEvent(ev)
+    onTouchEvent            super.onTouchEvent(event);
+   Logcat:
+
+
+
+
+case 2：
+  Activity
+      dispatchTouchEvent      super.dispatchTouchEvent(ev)
+      onTouchEvent            super.onTouchEvent(event);
+    TouchEventFather
+      dispatchTouchEvent      super.dispatchTouchEvent(ev)
+      onInterceptTouchEvent   super.onInterceptTouchEvent(event);
+      onTouchEvent            super.onTouchEvent(event);
+      onClick
+    TouchEventChild
+      dispatchTouchEvent      super.dispatchTouchEvent(ev)
+      onInterceptTouchEvent   super.onInterceptTouchEvent(event);
+      onTouchEvent            super.onTouchEvent(event);
+      onClick
+
+
+case 3：
+  dispatchTouchEvent
+  onInterceptTouchEvent
+  onTouchEvent
+
+
+case 4：
+  dispatchTouchEvent
+  onInterceptTouchEvent
+  onTouchEvent
+
+
+case 5：
+  dispatchTouchEvent
+  onInterceptTouchEvent
+  onTouchEvent
